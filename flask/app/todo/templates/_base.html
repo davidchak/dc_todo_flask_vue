@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	{% block head %}
+		<meta charset="UTF-8">
+		<title>Flask - Vue</title>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+		<link rel="stylesheet" href="{{ url_for('static', filename='font-awesome-4.7.0/css/font-awesome.min.css') }}">
+	{% endblock %}
+</head>
+<body style="background-color: #E1E5E7">
+	<div class="container-fluid px-0">
+	
+
+	{% block header %}{% endblock %}
+	
+	
+
+	{% block content %}{% endblock %}
+		
+
+
+	{% block footer %}{% endblock %}
+		
+
+	{% block scripts %}
+	<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+	{% endblock %}
+
+</body>
+</html>

@@ -1,0 +1,32 @@
+{% extends '_base.html' %}
+
+{% block header %}
+	{% include '_header.html' %}
+{% endblock %}
+
+
+{% block content %}
+	
+	<div class="row">
+		<div class="container-fluid">
+			<div class="row">
+				<div id="todo-list" class="div-col-12"></div>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}
+
+
+{% block footer %}
+	{% include '_footer.html' %}
+{% endblock %}
+
+
+
+
+{% block scripts %}
+	{{ super() }}
+	<!-- Vue app -->
+	<script src={{ url_for('static', filename='js/index.js') }}></script>
+{% endblock %}
