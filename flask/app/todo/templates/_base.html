@@ -9,7 +9,7 @@
 	{% endblock %}
 </head>
 <body style="background-color: #E1E5E7">
-	<div class="container-fluid px-0">
+	<div class="container-fluid">
 	
 
 	{% block header %}{% endblock %}
@@ -24,7 +24,8 @@
 		
 
 	{% block scripts %}
-	<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+	<script src="{{ url_for('static', filename='js/vue.js') }}"></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 	{% endblock %}
 
 </body>

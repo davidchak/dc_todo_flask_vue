@@ -13,8 +13,19 @@ class IndexView(View):
 
 class TodoView(MethodView):
 
-	def get(self, id):
-		return jsonify({'objects': Todo.query.all()})
+	def get(self):
+		todo = [{
+    			"title": "Firts Todo",
+    			"body" : "firts todo body"
+    		},{
+    			"title": "Second Todo",
+    			"body" : "second todo body"
+    		},{
+    			"title": "Theard Todo",
+    			"body" : "theard todo body"
+    		}]
+		# return jsonify({'objects': Todo.query.all()})
+		return jsonify({"todos": todo})
 	
 	def post(self):
 		pass

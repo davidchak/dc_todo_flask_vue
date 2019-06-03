@@ -8,9 +8,16 @@
 {% block content %}
 	
 	<div class="row">
-		<div class="container-fluid">
+		<div id="todo-list" class="container">
 			<div class="row">
-				<div id="todo-list" class="div-col-12"></div>
+				<div class="mr-auto ml-auto col-6 text-center">
+					<input v-model="newTodo" v-on:change="create" type="text" class="form form-control" name="input" placeholder="Введите название задачи">
+					<button v-on:click="fetchData">Загрузить</button>
+				</div>
+				<div class="col-12 border border-success m-2" v-for="todo in todos">
+					<h5>[[ todo.title ]]</h5>
+					<p>[[ todo.body ]]</p>
+				</div>
 			</div>
 		</div>
 	</div>
