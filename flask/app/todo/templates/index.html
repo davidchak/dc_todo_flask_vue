@@ -10,13 +10,17 @@
 	<div class="row">
 		<div id="todo-list" class="container">
 			<div class="row">
-				<div class="mr-auto ml-auto col-6 text-center">
-					<input v-model="newTodo" v-on:change="create" type="text" class="form form-control" name="input" placeholder="Введите название задачи">
-					<button v-on:click="fetchData">Загрузить</button>
+				<div class="mr-auto ml-auto col-sm-12 col-md-8 col-lg-6 mb-2 text-center">
+					<input v-model="newTodo" v-on:change="createTodo" type="text" class="form form-control" name="input" placeholder="Введите название задачи">
 				</div>
-				<div class="col-12 border border-success m-2" v-for="todo in todos">
-					<h5>[[ todo.title ]]</h5>
+				<div class="col-sm-12 col-md-8 col-lg-8 border border-success m-2 rounded mr-auto ml-auto bg-light" v-for="todo in todos" :key="todo.id">
+					<h5>Задача: [[ todo.title ]]</h5>
 					<p>[[ todo.body ]]</p>
+					<p>Создана: [[ todo.created ]]</p>
+					<div class="col-12 text-right m-1">
+						<button class="btn btn-outline-success" v-on:click="completeTodo(todo.id)">Выполнено</button>
+						<button class="btn btn-outline-success" v-on:click="deleteTodo(todo.id)">Удалить</button>
+					</div>
 				</div>
 			</div>
 		</div>

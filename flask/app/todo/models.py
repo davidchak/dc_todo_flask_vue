@@ -8,6 +8,16 @@ class Todo(db.Model):
     title = db.Column(db.String(100), nullable=False)
     body = db.Column(db.String(500), nullable=True)
     created = db.Column(db.DateTime, default=datetime.utcnow)
+    complete = db.Column(db.Boolean, default=False)
+
+    def as_dict(self):
+    	return {
+    		'id': self.id,
+    		'title': self.title,
+    		'body': self.body,
+    		'created': self.created,
+    		'complete': self.complete
+    		}
    	
 
     def __repr__(self):

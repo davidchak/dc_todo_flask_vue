@@ -10,8 +10,8 @@ todo_bp.add_url_rule('/', view_func=IndexView.as_view('index'), methods=['GET',]
 # todo_bp.add_url_rule('/task/id<int:id>/', view_func=TodoView.as_view('todo',
 # 					                        defaults={'id', None}), 
 # 											methods=['GET', 'PUT', 'DETELE', 'POST'])
-todo_bp.add_url_rule('/task/', view_func=TodoView.as_view('todo'),
-								methods=['GET',])
+todo_bp.add_url_rule('/task', view_func=TodoView.as_view('todo'),
+								methods=['GET', 'POST', 'DELETE', 'PUT'])
 
 
 def register_todo(app):
