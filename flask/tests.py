@@ -11,11 +11,11 @@ from app import create_app, db
 
 
 class FlaskTestCase(unittest.TestCase):
-    
+
     def setUp(self):
         self.extra_config_settings = {
-            'TESTING' : True,
-            'SQLALCHEMY_DATABASE_URI' : 'sqlite:///../test.sqlite'
+            'TESTING': True,
+            'SQLALCHEMY_DATABASE_URI': 'sqlite:///../test.sqlite'
         }
         app = create_app(self.extra_config_settings)
         app.app_context().push()
@@ -28,7 +28,7 @@ class FlaskTestCase(unittest.TestCase):
 
     def test_main_page_status_code(self):
         result = self.client.get('/')
-        self.assertEqual(result.status_code, 200) 
+        self.assertEqual(result.status_code, 200)
 
     def test_status_code_api_get_task(self):
         result = self.client.get('/api/v1/todos/')

@@ -8,7 +8,8 @@ moment.locale('ru');
 var data = {
     	endpoint: '/task',
     	newTodo: '',
-    	todos: []
+    	todos: [],
+    	showFilters: false,
 	}
 
 
