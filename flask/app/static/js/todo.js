@@ -1,9 +1,21 @@
 
 const TodoFilters = {
-	template: `<div class="col-12 border border-success my-2" style="height: 200px;"> Фильтры </div>`,
+	template: 	`<div class="col-12">
+					<div class="row">
+						<div class="col-12 text-center">
+							<a v-on:click="showFilters = !showFilters"  href="#"><i class="fa fa-cogs" aria-hidden="true"></i></a>
+						</div>
+					</div>
+					<div v-show="showFilters" class="row">
+						<div  class="col-12  my-1" style="height: 100px;">
+							<span>Фильтры</span> 
+						</div>
+					</div>
+				</div>`,
 	props: [],
 	data: function(){
 		return {
+			showFilters: false,
 		}
 	},
 }
@@ -11,7 +23,7 @@ const TodoFilters = {
 
 const NewTodo = {
 	template: 	`<div class="row">
-					<div class="col-sm-12 col-md-8 col-lg-8 mr-auto ml-auto  mb-2 text-center">
+					<div class="col-sm-12 col-md-8 col-lg-8 mr-auto ml-auto text-center">
 						<div class="input-group">
 							<input  type="text" class="form-control" placeholder="Новая задача"  aria-describedby="button-addon2" v-model="newTodo">
 							<div class="input-group-append">
@@ -55,26 +67,28 @@ const NewTodo = {
 
 
 const TodoItem = {
-	template: 	`<div class="col-8 mr-auto ml-auto border-bottom border-success py-1">
+	template: 	`<div class="col-12 mr-auto ml-auto border-bottom border-success py-1">
 					<div class="row" style="font-size: 1.3em;">
 
 						<div class="col-8 align-items-bottom">
 							<div class="row mx-2 h-100">
-								<p class="mb-1 align-self-end">{{ todo.title }}</p>
+								<p class="mb-1 align-self-end">
+									<span class="mx-2">{{ index + 1 }}.</span>
+									{{ todo.title }}</p>
 							</div>
 						</div>
 					
 						<div class="col-4 text-right" style="font-size: 1em;">
 							
-							<a class="text-success mr-2" href="#" v-on:click="showTaskInfo = !showTaskInfo">
+							<a class="text-success mx-2" href="#" v-on:click="showTaskInfo = !showTaskInfo">
 								<i class="fa fa-info" aria-hidden="true"></i>
 							</a>
 							
-							<a class="text-warning mr-2" href="#" v-on:click="completeTodo(todo.id)">
+							<a class="text-warning mx-2" href="#" v-on:click="completeTodo(todo.id)">
 								<i class="fa fa-check" aria-hidden="true"></i>
 							</a>
 							
-							<a class="text-danger mr-2" href="#" v-on:click="deleteTodo(todo.id)">
+							<a class="text-danger mx-2" href="#" v-on:click="deleteTodo(todo.id)">
 								<i class="fa fa-times" aria-hidden="true"></i>
 							</a>
 
@@ -87,7 +101,7 @@ const TodoItem = {
 						</div>
 					</div>
 				</div>`,
-	props: ['todo'],
+	props: ['todo', 'index'],
 	data: function(){
 		return {
 			endpoint: '/task',

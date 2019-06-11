@@ -7,17 +7,14 @@
 		<title>Flask - Vue</title>
 		<link rel="icon" sizes="48X48" href="{{ url_for('static', filename='img/favicon.ico') }}">
 		<link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+		<link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/bootstrap.min.css') }}" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 		<link rel="stylesheet" href="{{ url_for('static', filename='font-awesome-4.7.0/css/font-awesome.min.css') }}">
 	{% endblock %}
 </head>
-<body style="background-color: #E1E5E7">
-	<div class="container-fluid">
+<body style="background-color: #E1E5E7; min-height: 100vh;">
 	
-
 	{% block header %}{% endblock %}
-	
-	
+
 
 	{% block content %}{% endblock %}
 		
@@ -27,9 +24,9 @@
 		
 
 	{% block scripts %}
-		<script src="{{ url_for('static', filename='js/vuejs/vue.js') }}"></script>
-		<script src="{{ url_for('static', filename='js/vuejs/axios.min.js') }}"></script>
-		<script src="{{ url_for('static', filename='js/momentjs/moment.min.js') }}"></script>
+		{% assets "vuejs" %}
+			<script type="text/javascript" src="{{ ASSET_URL }}"></script>
+		{% endassets %}
 	{% endblock %}
 
 </body>

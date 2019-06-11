@@ -8,10 +8,10 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from app.settings import config
 from flask_user import UserManager
-# from flask_vue import Vue
+from flask_assets import Environment, Bundle
 
 db = SQLAlchemy()
-# vue = Vue()
+assets = Environment()
 
 
 # Initialize Flask Application
@@ -25,6 +25,14 @@ def create_app(config_name):
     # Load common settings
     app.config.from_object(config[config_name])
     config[config_name].init_app(app)
+
+    # Setup Flask-Assets
+    assets.init_app(app)
+    
+    # TODO: вынести в отдельный файл или в settings.py
+    vuejs = Bundle('js/vuejs/vue.js', 'js/vuejs/axios.min.js', 'js/todo.js' ,filters='jsmin', output='assets/assets.min.js')
+    assets.register('vuejs', vuejs)
+
 
     # Setup Flask-SQLAlchemy
     db.init_app(app)

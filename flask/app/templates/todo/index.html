@@ -8,17 +8,43 @@
 {% block content %}
 
 	<!-- Задачи -->
-	<div class="container">
-		<div id="todo-list" class="row">
+	<div class="container-fluid">
 
-			<new-todo></new-todo>
+		<!-- VueJS  app -->
+		<div class="row" id="todo-list" >
 
-			<div class="row">
-				<todo-item
-					v-for="todo in todos"
-					v-bind:todo="todo"
-					v-bind:key="todo.id">	
-				</todo-item>
+			<!-- Left panel -->
+			<div class="col-2 bg-warning">
+				<span>Правая панель</span>
+			</div>
+			
+			<!-- Center -->
+			<div class="col-8">
+				<div class="row">
+					<div class="col-12 my-2">
+						<!-- Input Component -->
+						<new-todo></new-todo>
+					</div>
+				</div>
+				<div class="row">
+					<todo-filters></todo-filters>
+				</div>
+				<div class="row">
+					<div class="col-12 my-2">
+						<!-- Todo-Item Component -->
+						<todo-item
+							v-for="(todo, index) in todos"
+							v-bind:index="index"
+							v-bind:todo="todo"
+							v-bind:key="todo.id">	
+						</todo-item>
+					</div>
+				</div>
+			</div>
+
+			<!-- Right Panel -->
+			<div class="col-2 bg-warning">
+				<span>Правая панель</span>
 			</div>
 			
 		</div>
@@ -37,5 +63,5 @@
 
 {% block scripts %}
 	{{ super() }}
-	<script src="{{ url_for('static', filename='js/todo.js') }}"></script>
+	<!-- <script src="{{ url_for('static', filename='js/todo.js') }}"></script> -->
 {% endblock %}

@@ -4,7 +4,7 @@ BASEDIR = os.path.abspath(os.path.dirname(__file__))
 
 
 class Config:
-    APP_NAME = "WESTCOM"
+    APP_NAME = "TodoApp"
     CSRF_ENABLED = True
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
@@ -13,9 +13,9 @@ class Config:
     MAIL_PORT = 465
     MAIL_USE_SSL = True
     MAIL_USE_TLS = False
-    MAIL_USERNAME = 'info@ops2u.ru'
-    MAIL_PASSWORD = 'gfhjkm@no1'
-    MAIL_DEFAULT_SENDER = '"Инфо" <info@ops2u.ru>'
+    MAIL_USERNAME = 'info@mydomen.ru'
+    MAIL_PASSWORD = 'veryhardpass'
+    MAIL_DEFAULT_SENDER = '"Инфо" <info@mydomen.ru>'
 
     # # Flask-User settings
     # USER_EMAIL_SENDER_NAME = 'info'
@@ -60,12 +60,14 @@ class DevelopmentConfig(Config):
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + \
         os.path.join(BASEDIR, 'test_app.db')
     SECRET_KEY = 'This is an INSECURE secret!! DO NOT use this in production!!'
+    ASSETS_DEBUG = False
 
 
 class ProductionConfig(Config):
     DEBUG = False
     TESTING = False
     SECRET_KEY = 'das;ldk93wd;LNlUOM9dhIJLNFL*uohjkm@(*#mdfnkjsakd'
+    ASSETS_DEBUG = False
 
     SQLALCHEMY_TRACK_MODIFICATIONS = True
     SQLALCHEMY_DATABASE_URI = "postgresql://root:toor@postgres/flask"
@@ -76,3 +78,4 @@ config = {
     'development': DevelopmentConfig,
     'default': DevelopmentConfig
 }
+
