@@ -6,59 +6,24 @@
 
 
 {% block content %}
-	
-	<div class="row m-2">
-		<div id="todo-list" class="container">
 
-			<!-- Content-header -->
+	<!-- Задачи -->
+	<div class="container">
+		<div id="todo-list" class="row">
+
+			<new-todo></new-todo>
+
 			<div class="row">
-				<div class="col-sm-12 col-md-8 col-lg-8 mr-auto ml-auto  mb-2 text-center">
-
-					<div class="input-group">
-						<input  type="text" class="form-control" placeholder="Новая задача" aria-label="	Recipient's username" aria-describedby="button-addon2" v-model="newTodo">
-						<div class="input-group-append">
-							<button class="btn btn-outline-secondary" type="button" id="button-addon2" v-on:click="createTodo">
-								<i class="fa fa-plus" aria-hidden="true"></i>
-							</button>
-						</div>
-					</div>
-
-				</div>
+				<todo-item
+					v-for="todo in todos"
+					v-bind:todo="todo"
+					v-bind:key="todo.id">	
+				</todo-item>
 			</div>
 			
-			<!-- Filters -->
-			<div class="row">
-				<div class="col-sm-12 col-md-8 col-lg-8 mr-auto ml-auto text-center">
-					<button v-on:click="showFilters = !showFilters" class="btn btn-sm btn-outline-success rounded-circle mb-2">
-						<i v-if="showFilters" class="fa fa-chevron-up" aria-hidden="true"></i>
-						<i v-else class="fa fa-chevron-down" aria-hidden="true"></i>
-					</button>
-				</div>
-			</div>
-			<div v-show="showFilters" class="row">
-				<div class="col-sm-12 col-md-8 col-lg-8 mb-2 mr-auto ml-auto border border-success rounded">
-					<span>Фильтры: будет добавленые позже!</span>
-				</div>
-			</div>
-			
-			<!-- Content-body -->
-			<div class="row">
-				<div class="col-sm-12 col-md-8 col-lg-8 border border-success m-2 rounded mr-auto ml-auto bg-light" v-for="todo in todos" :key="todo.id">
-					<h5>Задача: [[ todo.title ]]</h5>
-					<p>[[ todo.body ]]</p>
-					<p>Создана: [[ todo.created ]]</p>
-					<div class="col-12 text-right m-1">
-						<button class="btn btn-outline-success" v-on:click="completeTodo(todo.id)">
-							<i class="fa fa-check" aria-hidden="true"></i>
-						</button>
-						<button class="btn btn-outline-success" v-on:click="deleteTodo(todo.id)">
-							<i class="fa fa-times" aria-hidden="true"></i>
-						</button>
-					</div>
-				</div>
-			</div>
 		</div>
 	</div>
+
 
 {% endblock %}
 
@@ -72,6 +37,5 @@
 
 {% block scripts %}
 	{{ super() }}
-	<!-- Vue app -->
-	<script src="{{ url_for('static', filename='js/index.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/todo.js') }}"></script>
 {% endblock %}
