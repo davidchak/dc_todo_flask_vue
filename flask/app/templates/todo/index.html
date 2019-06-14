@@ -11,15 +11,10 @@
 	<div class="container-fluid">
 
 		<!-- VueJS  app -->
-		<div class="row" id="todo-list" >
-
-			<!-- Left panel -->
-			<div class="col-2 bg-warning">
-				<span>Правая панель</span>
-			</div>
+		<div class="row " id="todo-list" >
 			
 			<!-- Center -->
-			<div class="col-8">
+			<div class="col-sm-12 col-md-12 col-lg-8 ml-auto mr-auto">
 				<div class="row">
 					<div class="col-12 my-2">
 						<!-- Input Component -->
@@ -41,11 +36,6 @@
 					</div>
 				</div>
 			</div>
-
-			<!-- Right Panel -->
-			<div class="col-2 bg-warning">
-				<span>Правая панель</span>
-			</div>
 			
 		</div>
 	</div>
@@ -63,5 +53,7 @@
 
 {% block scripts %}
 	{{ super() }}
-	<!-- <script src="{{ url_for('static', filename='js/todo.js') }}"></script> -->
+	{% assets "vuejs" %}
+		<script type="text/javascript" src="{{ ASSET_URL }}"></script>
+	{% endassets %}
 {% endblock %}

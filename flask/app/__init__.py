@@ -14,25 +14,46 @@ db = SQLAlchemy()
 assets = Environment()
 
 
+# Register Blueprint
+def register_bluprints(app):
+    
+    from app.todo import register_todo
+    register_todo(app)
+
+    from app.cli import register_cli
+    register_cli(app)
+
+
+# Init flask-assets and create assets bundl
+def register_assets(app):
+    # Setup Flask-Assets
+    assets.init_app(app)
+
+    # TODO: вынести в отдельный файл или в settings.py
+    vuejs = Bundle('js/vuejs/vue.js', 'js/vuejs/axios.min.js',
+                   'js/todo.js', filters='jsmin', output='assets/assets.min.js')
+    assets.register('vuejs', vuejs)
+
+
+# Read app settings
+def read_app_settings(app, config_name='default'):
+    # Load common settings
+    app.config.from_object(config[config_name])
+    config[config_name].init_app(app)
+
+
 # Initialize Flask Application
-def create_app(config_name):
+def create_app(config_name=None):
     """Create a Flask application.
     """
     # Instantiate Flask
     app = Flask(__name__)
 
+    # Read app settings
+    read_app_settings(app, config_name)
 
-    # Load common settings
-    app.config.from_object(config[config_name])
-    config[config_name].init_app(app)
-
-    # Setup Flask-Assets
-    assets.init_app(app)
-    
-    # TODO: вынести в отдельный файл или в settings.py
-    vuejs = Bundle('js/vuejs/vue.js', 'js/vuejs/axios.min.js', 'js/todo.js' ,filters='jsmin', output='assets/assets.min.js')
-    assets.register('vuejs', vuejs)
-
+    # Register Flask-Assets
+    register_assets(app)
 
     # Setup Flask-SQLAlchemy
     db.init_app(app)
@@ -44,14 +65,8 @@ def create_app(config_name):
     from app.auth.models import User
     user_manager = UserManager(app, db, User)
 
-    # Setup Flask-Vue
-    # vue.init_app(app)
+    # create bluprints
+    register_bluprints(app)
 
-    # create blueprint
-    from app.todo import register_todo
-    register_todo(app)
-
-    from app.cli import register_cli
-    register_cli(app)
 
     return app

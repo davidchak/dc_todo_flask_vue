@@ -98,6 +98,8 @@ const TodoItem = {
 						<div class="col-12 m-2">
 							<p>Описание: {{ todo.body }}</p>
 							<p>Создано: {{ todo.created }}</p>
+							<hr>
+							<p>Автор: {{ todo.autor }}</p>
 						</div>
 					</div>
 				</div>`,

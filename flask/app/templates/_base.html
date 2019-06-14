@@ -7,11 +7,11 @@
 		<title>Flask - Vue</title>
 		<link rel="icon" sizes="48X48" href="{{ url_for('static', filename='img/favicon.ico') }}">
 		<link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
-		<link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/bootstrap.min.css') }}" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+		<link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/bootstrap.min.css') }}">
 		<link rel="stylesheet" href="{{ url_for('static', filename='font-awesome-4.7.0/css/font-awesome.min.css') }}">
 	{% endblock %}
 </head>
-<body style="background-color: #E1E5E7; min-height: 100vh;">
+<body style="background-color: #272B30; min-height: 100vh; color: white;">
 	
 	{% block header %}{% endblock %}
 
@@ -24,9 +24,7 @@
 		
 
 	{% block scripts %}
-		{% assets "vuejs" %}
-			<script type="text/javascript" src="{{ ASSET_URL }}"></script>
-		{% endassets %}
+		
 	{% endblock %}
 
 </body>

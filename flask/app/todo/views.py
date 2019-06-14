@@ -2,7 +2,7 @@ from app import db
 from flask.views import View, MethodView
 from flask import render_template, jsonify, request, json
 from .models import Todo
-from flask_user import login_required 
+from flask_user import login_required, current_user
 
 
 # Main Todo Page
@@ -21,10 +21,12 @@ class TodoView(MethodView):
     decorators = [login_required]
 
     def get_all(self):
+        # return ([todo._as_dict()
+        #         for todo in Todo.query.all() if todo.complete != True])[::-1]
         return ([todo._as_dict()
-                for todo in Todo.query.all() if todo.complete != True])[::-1]
+                for todo in Todo.query.filter_by(performer=current_user).all()])[::-1]
 
-    def get_one_as_dict(self, id):
+    def get_one_as_dict(self, id): 
         return Todo.query.filter_by(id=id).first()._as_dict()
 
     def get_one(self, id):
@@ -40,7 +42,8 @@ class TodoView(MethodView):
     def post(self):
         data = json.loads((request.data).decode())
         try:
-            db.session.add(Todo(title=data['title']))
+            # TODO: Сделать подгрузку исполнителя из шаблона, изменить (performer=current_user)
+            db.session.add(Todo(title=data['title'], autor=current_user, performer=current_user)) 
             db.session.commit()
             return jsonify({'success': True, 'todos': self.get_all()})
         except Exception as err:

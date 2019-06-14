@@ -1,6 +1,7 @@
 from app import db
 from datetime import datetime, timedelta
-from flask import json
+from flask import json, current_app
+
 
 
 class Todo(db.Model):
@@ -10,6 +11,7 @@ class Todo(db.Model):
     body = db.Column(db.String(500), nullable=True)
     created = db.Column(db.DateTime, default=datetime.utcnow)
     complete = db.Column(db.Boolean, default=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     def _as_dict(self):
         return {
@@ -17,8 +19,18 @@ class Todo(db.Model):
             'title': self.title,
             'body': self.body,
             'created': self.created,
-            'complete': self.complete
+            'complete': self.complete,
+            'autor_id': self.autor_id,
+            'autor': self.autor.get_full_name(),
+            'performer_id': self.performer_id,
+            'performer': self.performer.get_full_name()
         }
+
+    @staticmethod
+    def get_autor_full_name(id):
+        
+        return User.query.filter_by(id=id).first()
+
 
     # TODO: исправить 
     # @classmethod    
