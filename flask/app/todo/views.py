@@ -24,7 +24,7 @@ class TodoView(MethodView):
         # return ([todo._as_dict()
         #         for todo in Todo.query.all() if todo.complete != True])[::-1]
         return ([todo._as_dict()
-                for todo in Todo.query.filter_by(performer=current_user).all()])[::-1]
+                for todo in Todo.query.filter_by(autor_id=current_user.id).all()])[::-1]
 
     def get_one_as_dict(self, id): 
         return Todo.query.filter_by(id=id).first()._as_dict()
@@ -43,7 +43,7 @@ class TodoView(MethodView):
         data = json.loads((request.data).decode())
         try:
             # TODO: Сделать подгрузку исполнителя из шаблона, изменить (performer=current_user)
-            db.session.add(Todo(title=data['title'], autor=current_user, performer=current_user)) 
+            db.session.add(Todo(title=data['title'], autor=current_user)) 
             db.session.commit()
             return jsonify({'success': True, 'todos': self.get_all()})
         except Exception as err:

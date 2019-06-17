@@ -3,10 +3,10 @@ from flask_user import UserMixin
 from app.todo.models import Todo
 
 
-autors_performers = db.Table('autors_performers',
-        db.Column('autor_id', db.Integer, db.ForeignKey('users.id')),
-        db.Column('performer_id', db.Integer, db.ForeignKey('users.id'))
-    )
+# autors_performers = db.Table('autors_performers',
+#         db.Column('autor_id', db.Integer, db.ForeignKey('users.id')),
+#         db.Column('performer_id', db.Integer, db.ForeignKey('users.id'))
+#     )
 
 
 class User(db.Model, UserMixin):
@@ -27,11 +27,13 @@ class User(db.Model, UserMixin):
     # Define the relationship to Role via UserRoles
     roles = db.relationship('Role', secondary='user_roles')
 
-    autors = db.relationship(
-        'User', secondary=autors_performers,
-        primaryjoin=(autors_performers.c.performer_id == id),
-        secondaryjoin=(autors_performers.c.autor_id == id),
-        backref=db.backref('performers', lazy='dynamic'), lazy='dynamic')
+    todos = db.relationship('Todo', backref='autor', lazy=True)
+
+    # autors = db.relationship(
+    #     'User', secondary=autors_performers,
+    #     primaryjoin=(autors_performers.c.performer_id == id),
+    #     secondaryjoin=(autors_performers.c.autor_id == id),
+    #     backref=db.backref('performers', lazy='dynamic'), lazy='dynamic')
     
 
     def get_full_name(self):
