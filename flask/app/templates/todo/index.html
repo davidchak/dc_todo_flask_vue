@@ -11,30 +11,67 @@
 	<div class="container-fluid">
 
 		<!-- VueJS  app -->
-		<div class="row " id="todo-list" >
-			
-			<!-- Center -->
-			<div class="col-sm-12 col-md-12 col-lg-8 ml-auto mr-auto">
-				<div class="row">
-					<div class="col-12 my-2">
-						<!-- Input Component -->
-						<new-todo></new-todo>
+		<div class="row">
+            
+            <!-- Левая панель -->
+			<div class="col" style="max-width: 256px;">
+				<p>Левая панель</p>
+			</div>
+            
+            <!-- Центр -->
+			<div class="col bg-secondary" style="min-height: 100vh;">
+				<div class="row m-0 px-2">
+					<div class="col-12">
+
+						<!-- Название группы задач -->
+						<div class="row">
+							<div class="col-12 d-flex align-items-center  dc_todo_line-height">
+								<span class="font-weight-bold text-uppercase">Название группы задач</span>
+							</div>
+						</div>
+
+						<!--  -->
+						<div class="row text-success font-italic" style="font-size: 0.7em;">
+							<div class="col-12 d-flex align-items-end ">
+								<span class="ml-4 mr-auto">задача</span>
+								<span class="mr-5">автор</span>
+								<span class="mr-4">выполнить до:</span>
+							</div>
+						</div>
+
+						<!-- Список задач -->
+						<div class="row">
+							<div class="col-12 border-bottom border-success d-flex align-items-center  dc_todo_line-height">
+								<span class="mr-3">
+									<i class="fa fa-circle-o" aria-hidden="true"></i>
+								</span>
+								<span class="mr-auto">Задача</span>
+								<span class="mr-3">Чакирян Д.</span>
+								<span class="mr-3">22-04-2019</span>
+								<span><i class="fa fa-star-o" aria-hidden="true"></i></span>
+							</div>
+						</div>
+
+						<!-- Создание новой задачи -->
+						<div class="row">
+							<div class="col-12 border-bottom border-success d-flex align-items-center  dc_todo_line-height">
+								<span class="mr-3">
+									<i class="fa fa-plus" aria-hidden="true"></i>
+								</span>
+								<span class="text-white">
+									<input class="border-0 form-control" style="background-color: #6C757D;" type="text" placeholder="Новая задача">
+								</span>
+							</div>
+						</div>
+							
 					</div>
+					
 				</div>
-				<div class="row">
-					<todo-filters></todo-filters>
-				</div>
-				<div class="row">
-					<div class="col-12 my-2">
-						<!-- Todo-Item Component -->
-						<todo-item
-							v-for="(todo, index) in todos"
-							v-bind:index="index"
-							v-bind:todo="todo"
-							v-bind:key="todo.id">	
-						</todo-item>
-					</div>
-				</div>
+			</div>
+            
+            <!-- Правая панель -->
+			<div class="col" style="max-width: 512px;">
+				<p>Правая панель</p>
 			</div>
 			
 		</div>
@@ -55,5 +92,10 @@
 	{{ super() }}
 	{% assets "vuejs" %}
 		<script type="text/javascript" src="{{ ASSET_URL }}"></script>
+		<style>
+			.dc_todo_line-height{
+				min-height: 55px;
+			} 
+		</style>
 	{% endassets %}
 {% endblock %}

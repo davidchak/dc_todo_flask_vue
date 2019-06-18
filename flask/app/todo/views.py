@@ -1,7 +1,7 @@
 from app import db
 from flask.views import View, MethodView
 from flask import render_template, jsonify, request, json
-from .models import Todo
+from .models import Todo, Category
 from flask_user import login_required, current_user
 
 
@@ -43,7 +43,7 @@ class TodoView(MethodView):
         data = json.loads((request.data).decode())
         try:
             # TODO: Сделать подгрузку исполнителя из шаблона, изменить (performer=current_user)
-            db.session.add(Todo(title=data['title'], autor=current_user)) 
+            db.session.add(Todo(title=data['title'], autor=current_user, category=Category.query.filter_by(name="default").first())) 
             db.session.commit()
             return jsonify({'success': True, 'todos': self.get_all()})
         except Exception as err:

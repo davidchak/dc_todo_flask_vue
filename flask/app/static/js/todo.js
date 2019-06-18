@@ -74,7 +74,8 @@ const TodoItem = {
 							<div class="row mx-2 h-100">
 								<p class="mb-1 align-self-end">
 									<span class="mx-2">{{ index + 1 }}.</span>
-									{{ todo.title }}</p>
+									{{ todo.title }}
+								</p>
 							</div>
 						</div>
 					

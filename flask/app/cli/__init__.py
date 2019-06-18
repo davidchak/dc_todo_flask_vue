@@ -1,6 +1,7 @@
 import click
 from flask.cli import AppGroup, with_appcontext
 from app.auth.models import User, Role
+from app.todo.models import Category
 from datetime import datetime
 from flask import current_app
 
@@ -26,6 +27,18 @@ def create_superuser():
 		db.session.add(user)
 		db.session.commit()
 		print('Added user <davidchak@yandex.ru>')
+
+
+@other_cli.command('create_default_data')
+@with_appcontext
+def create_default_data():
+	
+	from app import db
+	category_list = ['default', 'day', 'week', 'month', 'important']
+	for i in  [x for x in category_list if Category.query.filter_by(name=x).first() is None]:
+		db.session.add(Category(name=i))
+		db.session.commit()
+		print('Category <{}> created success!'.format(i))
 
 
 def register_cli(app):

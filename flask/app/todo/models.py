@@ -13,6 +13,8 @@ class Todo(db.Model):
     complete = db.Column(db.Boolean, default=False)
     autor_id = db.Column(db.Integer, db.ForeignKey('users.id'),
                           nullable=False)
+    category_id = db.Column(db.Integer, db.ForeignKey('categories.id'),
+                          nullable=True)
 
     def _as_dict(self):
         return {
@@ -22,7 +24,8 @@ class Todo(db.Model):
             'created': self.created,
             'complete': self.complete,
             'autor_id': self.autor_id,
-            'autor': self.autor.get_full_name()
+            'autor': self.autor.get_full_name(),
+            'category': self.category.name
         }
 
 
@@ -41,3 +44,10 @@ class Todo(db.Model):
 
     def __repr__(self):
         return '<{}>'.format(self.title)
+
+
+class Category(db.Model):
+    __tablename__ = 'categories'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    todos = db.relationship('Todo', backref='category', lazy=True)
