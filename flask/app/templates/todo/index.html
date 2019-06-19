@@ -15,7 +15,77 @@
             
             <!-- Левая панель -->
 			<div class="col" style="max-width: 256px;">
-				<p>Левая панель</p>
+				<div class="row">
+
+					<!-- День - неделя - месяц -->
+					<div class="col-12">
+						<ul class="p-2 mb-0">
+
+							
+													
+							<li class="my-2" style="list-style: none;">
+								<span>
+									<i class="fa fa-sun-o" aria-hidden="true"></i>
+									<span class="h6 ml-2 mr-3">На сегодня</span>
+									<span class="badge badge-light">4</span>
+								</span>
+							</li>
+
+							<li class="my-2" style="list-style: none;">
+								<span>
+									<i class="fa fa-star" aria-hidden="true"></i>
+									<span class="h6 ml-2 mr-3">Важно</span>
+									<span class="badge badge-light">4</span>
+								</span>
+							</li>
+						
+							<li class="my-2" style="list-style: none;">
+								<span>
+									<i class="fa fa-calendar-check-o" aria-hidden="true"></i>
+									<span class="h6 ml-2 mr-3">Запланировано</span>
+									<span class="badge badge-light">4</span>
+								</span>
+							</li>
+
+							<li class="my-2" style="list-style: none;">
+								<span>
+									<i class="fa fa-window-restore" aria-hidden="true"></i>
+									<span class="h6 ml-2 mr-3">Все задачи</span>
+									<span class="badge badge-light">4</span>
+								</span>
+							</li>
+						</ul>
+					</div>		
+
+					<!-- Все -->
+					<div class="col-12">
+						<ul class="p-2 mb-0">
+							<div class="row text-success font-italic" style="font-size: 0.7em;">
+								<div class="col-12 d-flex align-items-end ">
+									<span>Группы задач</span>
+								</div>
+							</div>
+
+							<!-- Пример группы задач -->
+							<li class="my-2" style="list-style: none;">
+								<span>
+									<i class="fa fa-tasks" aria-hidden="true"></i>
+									<span class="h6 ml-2 mr-3">Личные</span>
+									<span class="badge badge-light">4</span>
+								</span>
+							</li>
+
+							<li class="my-2" style="list-style: none;">
+								<span>
+									<i class="fa fa-tasks" aria-hidden="true"></i>
+									<span class="h6 ml-2 mr-3">Работа</span>
+									<span class="badge badge-light">4</span>
+								</span>
+							</li>
+						</ul>
+					</div>
+				</div>
+				
 			</div>
             
             <!-- Центр -->
@@ -55,12 +125,30 @@
 						<!-- Создание новой задачи -->
 						<div class="row">
 							<div class="col-12 border-bottom border-success d-flex align-items-center  dc_todo_line-height">
-								<span class="mr-3">
-									<i class="fa fa-plus" aria-hidden="true"></i>
-								</span>
-								<span class="text-white">
-									<input class="border-0 form-control" style="background-color: #6C757D;" type="text" placeholder="Новая задача">
-								</span>
+								
+								<div class="input-group input-group-sm">
+									<div class="input-group-prepend">
+										<span class="input-group-text"><i class="fa fa-plus" aria-hidden="true"></i></span>
+									</div>
+									<input type="text" aria-label="First name" class="form-control" size="40" placeholder="Новая задача">
+									<select class="custom-select" id="inputGroupSelect04">
+										<option selected>Без группы</option>
+										<option value="1">День</option>
+										<option value="2">Неделя</option>
+										<option value="3">Месяц</option>
+									</select>
+									<!-- TODO: Задействовать когда будет готов функционал АВТОР-ИСПОЛНИТЕЛЬ -->
+									<!-- <select class="custom-select" id="inputGroupSelect04">
+										<option selected>Исполнитель</option>
+										<option value="1">Иванов И.</option>
+										<option value="2">Петров П.</option>
+										<option value="3">Васильев В.</option>
+									</select> -->
+									<div class="input-group-append">
+										<button class="btn btn-outline-success" type="button">Создать</button>
+									</div>
+								</div>
+								
 							</div>
 						</div>
 							

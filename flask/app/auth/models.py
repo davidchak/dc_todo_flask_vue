@@ -3,12 +3,6 @@ from flask_user import UserMixin
 from app.todo.models import Todo
 
 
-# autors_performers = db.Table('autors_performers',
-#         db.Column('autor_id', db.Integer, db.ForeignKey('users.id')),
-#         db.Column('performer_id', db.Integer, db.ForeignKey('users.id'))
-#     )
-
-
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)

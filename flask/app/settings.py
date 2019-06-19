@@ -57,17 +57,19 @@ class Config:
 class DevelopmentConfig(Config):
     APP_NAME = "WESTCOM dev"
     DEBUG = True
-    # SQLALCHEMY_DATABASE_URI = 'sqlite:///' + \
-    #     os.path.join(BASEDIR, 'test_app.db')
-    SQLALCHEMY_DATABASE_URI = "postgresql://root:toor@192.168.10.122/flask"
-    SECRET_KEY = 'This is an INSECURE secret!! DO NOT use this in production!!'
-    ASSETS_DEBUG = False
+    SECRET_KEY = 'super secret'
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + \
+        os.path.join(BASEDIR, 'test_app.db')
+
+    # SQLALCHEMY_DATABASE_URI = "postgresql://root:toor@192.168.10.122/flask"
+    # SECRET_KEY = 'This is an INSECURE secret!! DO NOT use this in production!!'
+    # ASSETS_DEBUG = False
 
 
 class ProductionConfig(Config):
     DEBUG = False
     TESTING = False
-    SECRET_KEY = 'das;ldk93wd;LNlUOM9dhIJLNFL*uohjkm@(*#mdfnkjsakd'
+    SECRET_KEY = 'super secret'
     ASSETS_DEBUG = False
 
     SQLALCHEMY_TRACK_MODIFICATIONS = True

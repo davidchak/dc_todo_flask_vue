@@ -1,0 +1,9 @@
+.dc_todo-input{
+
+}
+
+.dc_todo-input:focus{
+    border-left: none;
+    border-right: none;
+    border-top: none;
+}

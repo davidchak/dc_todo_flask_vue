@@ -21,8 +21,6 @@ class TodoView(MethodView):
     decorators = [login_required]
 
     def get_all(self):
-        # return ([todo._as_dict()
-        #         for todo in Todo.query.all() if todo.complete != True])[::-1]
         return ([todo._as_dict()
                 for todo in Todo.query.filter_by(autor_id=current_user.id).all()])[::-1]
 
