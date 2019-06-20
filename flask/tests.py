@@ -8,30 +8,45 @@ import os
 import unittest
 
 from app import create_app, db
+from flask_user import current_user
+from datetime import datetime
+from flask import current_app
 
 
 class FlaskTestCase(unittest.TestCase):
 
     def setUp(self):
-        self.extra_config_settings = {
-            'TESTING': True,
-            'SQLALCHEMY_DATABASE_URI': 'sqlite:///../test.sqlite'
-        }
-        app = create_app(self.extra_config_settings)
+        app = create_app('testconf')
         app.app_context().push()
         self.client = app.test_client()
         db.create_all()
+
+        from app.auth.models import User, Role
+        
+        test_user = User(
+            first_name='test',
+            last_name='test',
+            email='test@ya.ru',
+            email_confirmed_at=datetime.utcnow(),
+            password=current_app.user_manager.hash_password('test'),
+        )
+        test_user.roles.append(Role(name='admin'))
+
+        db.session.add(test_user)
+        db.session.commit()
+        current_user = test_user
 
     def tearDown(self):
         db.session.remove()
         db.drop_all()
 
+
     def test_main_page_status_code(self):
         result = self.client.get('/')
         self.assertEqual(result.status_code, 200)
 
-    def test_status_code_api_get_task(self):
-        result = self.client.get('/api/v1/todos/')
+    def test_task_api_status_code(self):
+        result = self.client.get('/task/')
         self.assertEqual(result.status_code, 200)
 
 

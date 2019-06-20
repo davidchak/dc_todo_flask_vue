@@ -16,6 +16,7 @@ class IndexView(View):
         return render_template(self.template_name)
 
 
+
 # Api for vuejs
 class TodoView(MethodView):
     decorators = [login_required]

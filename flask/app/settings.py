@@ -75,10 +75,17 @@ class ProductionConfig(Config):
     SQLALCHEMY_TRACK_MODIFICATIONS = True
     SQLALCHEMY_DATABASE_URI = "postgresql://root:toor@192.168.10.122/flask"
 
+class TestConfig(Config):
+    SECRET_KEY = 'super secret'
+    TESTING = True,
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + \
+        os.path.join(BASEDIR, 'test.db')
+
 
 config = {
     'production': ProductionConfig,
     'development': DevelopmentConfig,
-    'default': DevelopmentConfig
+    'default': DevelopmentConfig,
+    'testconf': TestConfig
 }
 
