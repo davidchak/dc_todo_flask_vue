@@ -51,3 +51,16 @@ class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     todos = db.relationship('Todo', backref='category', lazy=True)
+
+    def _as_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'task_count': self.get_task_count()
+        }
+
+    def get_task_count(self):
+        return len(self.todos)
+
+    def __repr__(self):
+        return '<{}>'.format(self.name)

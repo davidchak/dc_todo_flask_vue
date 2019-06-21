@@ -1,23 +1,43 @@
-from .views import IndexView, TodoView
+from .views import IndexView
+from .api import ApiMainView, TaskApi, CategoryApi
 from flask import Blueprint
 
 
 todo_bp = Blueprint('todo', __name__, template_folder='/templates')
+todo_api_bp = Blueprint('todo_api', __name__)
 
 
-# register url in blueprint
+# TODO
 todo_bp.add_url_rule(
     	'/',
     	view_func=IndexView.as_view('index'),
     	methods=['GET',]
    	)
 
-todo_bp.add_url_rule(
-		'/task', 
-		view_func=TodoView.as_view('todo'),
-    	methods=['GET', 'POST', 'DELETE', 'PUT']
-    )
 
 
+# TODO API
+todo_api_bp.add_url_rule(
+	'/',
+	view_func=ApiMainView.as_view('todo_api_info'),
+	methods=['GET']
+)
+
+todo_api_bp.add_url_rule(
+	'/task',
+	view_func=TaskApi.as_view('task_api'),
+	methods=['GET', 'POST', 'DELETE', 'PUT']
+)
+
+todo_api_bp.add_url_rule(
+	'/category',
+	view_func=CategoryApi.as_view('category_api'),
+	methods=['GET', 'POST', 'DELETE', 'PUT']
+)
+
+
+
+# Register blueprint todo and todo_api
 def register_todo(app):
     app.register_blueprint(blueprint=todo_bp, url_prefix='/')
+    app.register_blueprint(blueprint=todo_api_bp, url_prefix='/api/v1/')

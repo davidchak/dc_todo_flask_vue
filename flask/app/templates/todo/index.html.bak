@@ -36,15 +36,14 @@
 									<span class="badge badge-light">4</span>
 								</span>
 							</li>
-							
-							<!-- TODO: внедрить после планировщика! -->
-							<!-- <li class="my-2" style="list-style: none;">
+						
+							<li class="my-2" style="list-style: none;">
 								<span>
 									<i class="fa fa-calendar-check-o" aria-hidden="true"></i>
 									<span class="h6 ml-2 mr-3"><a href="">Запланировано</a></span>
 									<span class="badge badge-light">4</span>
 								</span>
-							</li> -->
+							</li>
 
 							<li class="my-2" style="list-style: none;">
 								<span>
@@ -65,13 +64,22 @@
 								</div>
 							</div>
 
-							<!-- Группы задач -->
-							<category-item
-								v-for="category in categories"
-								v-bind:category="category"
-								v-bind:key="category.id">
-							</category-item>
-							
+							<!-- Пример группы задач -->
+							<li class="my-2" style="list-style: none;">
+								<span>
+									<i class="fa fa-tasks" aria-hidden="true"></i>
+									<span class="h6 ml-2 mr-3"><a href="">Личные</a></span>
+									<span class="badge badge-light">4</span>
+								</span>
+							</li>
+
+							<li class="my-2" style="list-style: none;">
+								<span>
+									<i class="fa fa-tasks" aria-hidden="true"></i>
+									<span class="h6 ml-2 mr-3"><a href="">Работа</a></span>
+									<span class="badge badge-light">4</span>
+								</span>
+							</li>
 						</ul>
 					</div>
 
