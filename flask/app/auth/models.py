@@ -1,6 +1,6 @@
 from app import db
 from flask_user import UserMixin
-from app.todo.models import Todo
+from app.todo.models import Todo, Category
 
 
 class User(db.Model, UserMixin):
@@ -22,6 +22,7 @@ class User(db.Model, UserMixin):
     roles = db.relationship('Role', secondary='user_roles')
 
     todos = db.relationship('Todo', backref='autor', lazy=True)
+    categories = db.relationship('Category', backref='autor', lazy=True)
 
     # autors = db.relationship(
     #     'User', secondary=autors_performers,

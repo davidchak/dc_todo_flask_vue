@@ -126,7 +126,12 @@
 						<!-- TODO: добавить выделение цветом при наведении -->
 						<!-- TODO: добавить вывод информации по клику -->
 						<div class="row">
-							<div class="col-12 border-bottom border-success d-flex align-items-center" style="min-height: 55px;">
+							<todo-item
+								v-for="todo in todos"
+								v-bind:todo="todo"
+								v-bind:key="todo.id">
+							</todo-item>
+							<!-- <div class="col-12 border-bottom border-success d-flex align-items-center" style="min-height: 55px;">
 								<span class="mr-3">
 									<i class="fa fa-circle-o" aria-hidden="true"></i>
 								</span>
@@ -154,7 +159,8 @@
 								<span class="mr-3">Чакирян Д.</span>
 								<span class="mr-3">22-04-2019</span>
 								<span><i class="fa fa-star-o" aria-hidden="true"></i></span>
-							</div>
+							</div> -->
+							
 						</div>
 
 						<!-- Создание новой задачи -->
@@ -215,7 +221,7 @@
 
 {% block scripts %}
 	{{ super() }}
-	{% assets "vuejs" %}
+	{% assets "js_bundle" %}
 		<script type="text/javascript" src="{{ ASSET_URL }}"></script>
 	{% endassets %}
 {% endblock %}

@@ -8,7 +8,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from app.settings import config
 from flask_user import UserManager
-from flask_assets import Environment, Bundle
+from flask_assets import Environment
+
 
 db = SQLAlchemy()
 assets = Environment()
@@ -24,15 +25,12 @@ def register_bluprints(app):
     register_cli(app)
 
 
-# Init flask-assets and create assets bundl
+# Init flask-assets and create assets bundle
 def register_assets(app):
-    # Setup Flask-Assets
     assets.init_app(app)
-
-    # TODO: вынести в отдельный файл или в settings.py
-    vuejs = Bundle('js/vuejs/vue.js', 'js/vuejs/axios.min.js',
-                   'js/todo.js', filters='jsmin', output='assets/assets.min.js')
-    assets.register('vuejs', vuejs)
+    
+    from app.todo import register_todo_assets
+    register_todo_assets(assets)
 
 
 # Read app settings

@@ -11,6 +11,7 @@ class Todo(db.Model):
     body = db.Column(db.String(500), nullable=True)
     created = db.Column(db.DateTime, default=datetime.utcnow)
     complete = db.Column(db.Boolean, default=False)
+    expiry_date = db.Column(db.DateTime, default=datetime.utcnow)
     autor_id = db.Column(db.Integer, db.ForeignKey('users.id'),
                           nullable=False)
     category_id = db.Column(db.Integer, db.ForeignKey('categories.id'),
@@ -22,10 +23,12 @@ class Todo(db.Model):
             'title': self.title,
             'body': self.body,
             'created': self.created,
+            'expiry_date': self.expiry_date,
             'complete': self.complete,
             'autor_id': self.autor_id,
             'autor': self.autor.get_full_name(),
-            'category': self.category.name
+            'category': self.category.name,
+            'overdue': True if self.expiry_date < datetime.utcnow() else False 
         }
 
 
@@ -50,12 +53,16 @@ class Category(db.Model):
     __tablename__ = 'categories'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
+    description = db.Column(db.String(100))
     todos = db.relationship('Todo', backref='category', lazy=True)
+    autor_id = db.Column(db.Integer, db.ForeignKey('users.id'),
+                          nullable=False)
 
     def _as_dict(self):
         return {
             'id': self.id,
             'name': self.name,
+            'description': self.description,
             'task_count': self.get_task_count()
         }
 
