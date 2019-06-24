@@ -62,7 +62,7 @@ class DevelopmentConfig(Config):
         os.path.join(BASEDIR, 'test_app.db')
 
     # SQLALCHEMY_DATABASE_URI = "postgresql://root:toor@192.168.10.122/flask"
-    # SECRET_KEY = 'This is an INSECURE secret!! DO NOT use this in production!!'
+    SECRET_KEY = 'This is an INSECURE secret!! DO NOT use this in production!!'
     ASSETS_DEBUG = True
 
 
