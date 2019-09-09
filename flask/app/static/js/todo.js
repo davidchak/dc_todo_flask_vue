@@ -1,171 +1,150 @@
+// Шапка
+// const TodoHeader = {
+//     template: `<div class="col-12 fixed-top border-bottom border-success">
+//                         <h3>{{ app_text }}</h3>
+//                     </div>`,
 
+//     data: function () {
+//         return {
+//             app_text: 'Todo Header'
+//         }
+//     }
+// }
 
-Vue.filter('capitalize', function (value) {
-    if (!value) return ''
-    value = value.toString()
-    return value.charAt(0).toUpperCase() + value.slice(1)
-})
-
-Vue.filter('datetime', function (value) {
-    if (!value) return ''
-    return moment(value).format('L');
-})
-
-const TodoItem = {
-    template: `<div class="col-12 border-bottom border-success d-flex align-items-center" style="min-height: 55px;">
-                    <span class="mr-3" v-on:click="completeTask = !competeTask">
-                        <i class="fa fa-circle-o" aria-hidden="true"></i>
-                    </span>
-                    <span v-bind:class="[ todo.overdue  ? errorClass:'' , mrAutoClass ]">{{ todo.title }}</span>
-                    <span class="mr-3">{{ todo.autor }}</span>
-                    <span class="mr-3">{{ todo.expiry_date | datetime }}</span>
-                    <span><i class="fa fa-star-o" aria-hidden="true"></i></span>
+// Задача
+const Task = {
+    template: `<div class="row mt-1 p-2 border border-warning">
+                    <div class="col-5">
+                        <span> {{ todo.title }} </span>
+                    </div>
+                    <div class="col-2 text-center">
+                        <span> {{ todo.autor }} </span>
+                    </div>
+                    <div class="col-2 text-center">
+                        <span> {{ todo.expiry_date }} </span>
+                    </div>
+                    <div class="col-3 text-center">
+                        <span>Действия</span>
+                    </div>
                 </div>`,
     props: ['todo'],
-    data: function () {
-        return  {
-            errorClass: 'text-danger',
-            mrAutoClass: 'mr-auto',
-            completeTask: false,
-        }
-    }
+
+    methods: {
+        add: function () {
+            console.log('add')
+        },
+        delete: function () {
+            console.log('delete')
+        },
+        update: function () {
+            console.log('update')
+        },
+    },  
 }
 
-const NewTodoItem = {
-    template:   `<div class="col-12 border-bottom border-success d-flex align-items-center" style="min-height: 55px;">
-                    <div v-show="!showInputFields" class="input-group input-group-sm">
-                        <span v-on:click="showInputFields = !showInputFields" class="input-group-text rounded-pill">
-                            <i class="fa fa-plus" aria-hidden="true"></i>
-                        </span>
 
-                    </div>
-
-                    <div v-show="showInputFields" class="input-group input-group-sm">
-                        <div class="input-group-prepend">
-                            <span v-on:click="showInputFields = !showInputFields" class="input-group-text">
-                                <i class="fa fa-minus" aria-hidden="true"></i>
-                            </span>
+// Список задач
+const TodoList = {
+    template: `<div class="col-12">
+                    <div class="row mt-1 p-2 border border-success">
+                        <div class="col-5">
+                            <span>Описание задачи</span>
                         </div>
-                        <input v-model="todoTitle" type="text" aria-label="First name" class="form-control" size="40" placeholder="Новая задача">
-                        <select v-model="selectedGroup" class="custom-select" id="inputGroupSelect04">
-                            <!-- TODO: вывод списка групп приложений через VueJS -->
-                            <option  v-for="category in categories"
-                                v-bind:value="category.name">
-                                    {{ category.description }}
-                                </option>
-                        </select>
-                        <div class="input-group-append">
-                            <button v-on:click="createNewTask" class="btn btn-outline-success" type="button">Создать</button>
+                        <div class="col-2 text-center">
+                            <span>Автор</span>
                         </div>
-                    </div>
+                        <div class="col-2 text-center">
+                            <span>Выполнить до</span>
+                        </div>
+                        <div class="col-3 text-center">
+                            <span>Действия</span>
+                        </div>
+                    </div>   
+                    
+                    <Task 
+                        v-for="todo in todos"
+                        v-bind:todo="todo"
+                        v-bind:key="todo.id">
+                    </Task>
                 </div>`,
-    props: ['categories'],
-    data: function(){
+
+    components: {
+        Task
+    },
+
+    data: function () {
         return {
-            todoTitle: '',
-            selectedGroup: '',
-            showInputFields: false,
+            task_api: '/api/v1/task',
+            todos: []
         }
     },
+
     methods: {
-        createNewTask: function(){
-            if (this.todoTitle !== ''){
-                console.log(this.todoTitle, this.selectedGroup);
-                this.todoTitle = '';
-            }
+        getTodos: function () {
+            console.log('Download todos from backend');
+            axios.get(this.task_api)
+                .then(function (response) {
+                    // # TODO: решить проблему с загрузкой данных в переменную
+                    this.$data.todos = response.data.todos;
+                    console.log(response.data.todos);
+                })
+                .catch(function (error) {
+                    console.log(error)
+                })
+        },
+        updateTodos: function () {
+            console.log('delete');
+        },
+        clearTodos: function () {
+            console.log('update');
         }
-    }
+    }, 
+
+    created: function () {
+        this.getTodos()
+    } 
+
 }
 
-const CategoryItem = {
-    template: `<li class="my-2" style="list-style: none;">
-                    <span>
-                        <i class="fa fa-tasks" aria-hidden="true"></i>
-                        <span class="h6 ml-2 mr-3"><a href="">{{ category.description | capitalize }}</a></span>
-                        <span class="badge badge-light">{{ category.task_count }}</span>
-                    </span>
-                </li>`,
-    props: ['category'],
-}
 
-const NewTaskGroup = {
-    template:   `<div class="col-12">
-                    <span v-on:click="showInput = !showInput" v-show="showInput" class="color-success">
-                        <i class="fa fa-plus" aria-hidden="true"></i>
-                        Создать группу
-                    </span>
-                    <div v-show="!showInput" class="input-group input-group-sm mb-3">
-                        <input v-model="inputValue" type="text" class="form-control" placeholder="Название группы" aria-label="Название группы" aria-describedby="button3">
-                        <div class="input-group-append">
-                            <button v-on:click="createNewGroup" class="btn btn-outline-secondary" type="button" id="button3">
-                                <i class="fa fa-plus" aria-hidden="true"></i>
-                            </button>
-                        </div>
-                    </div> 
+// Основное блок программы
+const TodoContent = {
+    template:   `<div class="container border-left border-right border-success" style="min-height: 100vh;">  
+                    <TodoList/>
                 </div>`,
-    data: function () {
-        return {
-            showInput: true,
-            inputValue: '',
-        }
-    }, 
-
-
-    methods: {
-        createNewGroup: function(){
-            if (this.inputValue !== ''){
-                this.showInput = true;
-                // TODO: Отправка данных на сервер и получение нового списка
-                console.log(this.inputValue);
-                this.inputValue = '';
-            }
-            
-        }
-    }, 
+    components: {
+        TodoList,
+    },
 }
 
+
+// Подвал
+// const TodoFooter = {
+//     template: `<div class="col-12 fixed-bottom border-top border-success">
+//                     <span>Version: {{ ver }}</span>
+//                 </div>`,
+
+//     data: function () {
+//         return {
+//             app_text: 'Todo Footer',
+//             ver: '0.1b'
+//         }
+//     }
+// }
+
+
+// Экземпляр приложения Vue
 const todoapp = new Vue({
     el: '#todoapp',
     components: {
-        'category-item': CategoryItem,
-        'todo-item': TodoItem,
-        'new-task-group': NewTaskGroup,
-        'new-todo-item': NewTodoItem
+        // 'todo-header': TodoHeader,
+        'todo-content': TodoContent,
+        // 'todo-footer': TodoFooter,
     },
 
     data: {
         category_api: '/api/v1/category',
         task_api: '/api/v1/task',
-        categories: [],
-        todos: [],
-        appname: 'todoapp'
-    },
-
-    methods: {
-        getCategories: function () {
-            axios.get(this.category_api)
-                .then(function (response) {
-                    todoapp.$data.categories = response.data.categories
-                })
-                .catch(function (error) {
-                    console.log(error);
-                })
-        },
-        getAllTasks: function() {
-            axios.get(this.task_api)
-                .then(function (response) {
-                    todoapp.$data.todos = response.data.todos
-                })
-                .catch(function (error) {
-                    console.log(error);
-                })
-        }
-    }, // EndMethods
-
-
-    created: function () {
-        this.getCategories(),
-        this.getAllTasks()
     },
 
 })
