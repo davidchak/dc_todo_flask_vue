@@ -122,6 +122,8 @@ const TodoList = {
                         v-bind:key="todo.id">
                     </Task>
 
+                    <Footer/>
+
                 </div>`,
 
     components: {
@@ -133,30 +135,14 @@ const TodoList = {
         return {
             task_api: '/api/v1/task',
             todos: [],
-            info: null
-            //[
-                // { "id": "1", "title": "Задача 1", "autor": "Давид Ч.", "expiry_date": "20.09.2019" },
-                // { "id": "2", "title": "Задача 2", "autor": "Давид Ч.", "expiry_date": "21.09.2019" },
-                // { "id": "3", "title": "Задача 3", "autor": "Давид Ч.", "expiry_date": "23.09.2019" },
-            //]
         }
     },
 
     methods: {
         getTodos: function () {
-            console.log('Download todos from backend');
             axios.get(this.task_api)
                 .then(response => (this.todos = response.data.todos))
                 .catch(error => console.log(error))
-                // .then(function (response) {
-                //     // # TODO: решить проблему с загрузкой данных в переменную
-                //     this.todos = response.data.todos
-                //     this.info = response
-                //     console.log(response.data)
-                // })
-                // .catch(function (error) {
-                //     console.log(error)
-                // })
         },
         updateTodos: function () {
             console.log('delete')
