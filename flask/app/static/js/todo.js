@@ -20,7 +20,13 @@ Vue.filter('datetime', function (value) {
     moment.locale('ru');
     if (!value) return ''
     return moment(value).format('L');
-})
+});
+
+// Разворачивает массив
+Vue.filter('reverse', function (value) {
+    return value.slice().reverse();
+});
+
 
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 // Components
@@ -38,18 +44,21 @@ const Task = {
                         <span> {{ todo.expiry_date | datetime }} </span>
                     </div>
                     <div class="col-3 text-center">
-                        <input v-on:click="complete_task(todo.id)" class="btn btn-outline-success" type="button" name="complete" value="Выполнено">
-                        <input v-on:click="remove_task(todo.id)" class="btn btn-outline-danger" type="button" name="remove" value="Удалить">
+                        <input v-on:click="completeTask(todo.id)" class="btn btn-outline-success" type="button" name="complete" value="Выполнено">
+                        <input v-on:click="deleteTask(todo.id)" class="btn btn-outline-danger" type="button" name="remove" value="Удалить">
                     </div>
                 </div>`,
     props: ['todo'],
 
     methods: {
-        remove_task: function (id) {
-            // # TODO: реализовать удаление задачи из списка родителя
-            console.log('remove task', id)
+        deleteTask: function (id) {
+            axios.delete(this.$parent.task_api + '?id='+id)
+            .then(response => console.log(response.data))
+            .catch(error => console.log(error));
+            this.$parent.updateTodos();
+            console.log('delete task', id)
         },
-        complete_task: function (id) {
+        completeTask: function (id) {
             // # TODO: реализовать изменение статуса задачи через родителя
             console.log('complete task', id)
         },
@@ -77,31 +86,42 @@ const AddTask = {
                     </div>
                     <div class="col-3 text-center">
                         <span>
-                            <input v-on:click="create_task" class="btn btn-outline-success" type="button" name="create" value="Создать">
+                            <input v-on:click="createTask" class="btn btn-outline-success" type="button" name="create" value="Создать">
                         </span>
                     </div>
                 </div>`,
-    props: ['todo'],
     data: function(){
         return {
             title: '',
             autor: '',
-            expity_date: '',
-            task_api: '/api/v1/task',
+            expity_date: ''
         }
     },
 
     methods: {
-        create_task: function () {
+        createTask: function () {
             // # TODO: обновить список задач у родителя
-            // # TODO: сделать валидатор заполненности полей
-            axios.post(this.task_api, {
-                title: this.title
-            })
-            .then(response => console.log(response.data))
-            .catch(error => console.log(error))
+            // # TODO: сделать валидатор заполненности 
+            if (this.title != ''){
+                axios.post(this.$parent.task_api, {
+                    title: this.title
+                })
+                .then(response => console.log(response.data))
+                .catch(error => console.log(error));
+                // this.$parent.getTodos();
+                this.resetValues();
+                this.$parent.updateTodos();
+            } else {
+                console.log('Пустое поле');
+            }
+
+        },
+        resetValues: function(){
+            this.title = '',
+            this.autor = '',
+            this.expity_date = ''
         }
-    },
+    }
 }
 
 
@@ -153,21 +173,13 @@ const TodoList = {
                 .catch(error => console.log(error))
         },
         updateTodos: function () {
-            console.log('delete')
+            this.getTodos();
+            console.log('Updated!');
         },
         clearTodos: function () {
             this.todos = []
-        },
-        onCreateNewTask: function(){
-            console.log('OnCreateNewTask')
         }
     }, 
-
-    computed: {
-        updateTaskListOnAddedNewTask: function(){
-            // # TODO: обновить список задач
-        }
-    },
 
     created: function () {
         this.getTodos()
