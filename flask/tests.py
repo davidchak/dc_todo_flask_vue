@@ -1,6 +1,12 @@
 # __init__.py is a special Python file that allows a directory to become
 # a Python package so it can be accessed using the 'import' statement.
 
+# static                          GET                     /static/<path:filename>
+# todo.index                      GET                     /
+# todo_api.category_api           DELETE, GET, POST, PUT  /api/v1/category
+# todo_api.task_api               DELETE, GET, POST, PUT  /api/v1/task
+# todo_api.todo_api_info          GET                     /api/v1/
+
 # Intentionally left empty
 import unittest
 
