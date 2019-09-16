@@ -87,15 +87,19 @@ const AddTask = {
             title: '',
             autor: '',
             expity_date: '',
+            task_api: '/api/v1/task',
         }
     },
 
     methods: {
         create_task: function () {
-            // # TODO: отправить данные на сервер
             // # TODO: обновить список задач у родителя
             // # TODO: сделать валидатор заполненности полей
-            console.log('New todo:', this.title, this.autor, this.expity_date)
+            axios.post(this.task_api, {
+                title: this.title
+            })
+            .then(response => console.log(response.data))
+            .catch(error => console.log(error))
         }
     },
 }
@@ -158,6 +162,12 @@ const TodoList = {
             console.log('OnCreateNewTask')
         }
     }, 
+
+    computed: {
+        updateTaskListOnAddedNewTask: function(){
+            // # TODO: обновить список задач
+        }
+    },
 
     created: function () {
         this.getTodos()

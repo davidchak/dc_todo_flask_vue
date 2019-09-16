@@ -42,10 +42,12 @@ class TaskApi(MethodView):
         data = json.loads((request.data).decode())
         try:
             # TODO: Сделать подгрузку исполнителя из шаблона, изменить (performer=current_user)
-            db.session.add(Todo(title=data['title'], autor=current_user,
-                                category=Category.query.filter_by(name="default").first()))
+            db.session.add(Todo(
+                title=data['title'], 
+                autor=current_user,
+                category=Category.query.filter_by(name="default").first()))
             db.session.commit()
-            return jsonify({'success': True, 'todos': self.get_all()})
+            return jsonify({'success': True})
         except Exception as err:
             db.session.rollback()
             return jsonify({'successs': False, 'error': err})
